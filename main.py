@@ -12,7 +12,7 @@ class SimpleWebAppHandler(BaseHTTPRequestHandler):
 
         self.wfile.write(html_content.encode('utf-8'))
 
-def run_web_app(port=8000):
+def run_web_app(port=80):
     server_address = ('', port)
     httpd = HTTPServer(server_address, SimpleWebAppHandler)
     print('Starting web app on port {}'.format(port))
