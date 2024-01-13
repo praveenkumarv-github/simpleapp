@@ -1,4 +1,4 @@
-name: Docker Build
+name: Docker Build and Push
 
 on:
   push:
@@ -9,6 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+  
+    - name: Read current version
+      id: read_version
+      run: echo "::set-output name=version::$(cat VERSION)"
+
+    - name: Increment version
+      id: increment_version
+      run: echo "::set-output name=version::$(echo ${{ steps.read_version.outputs.version }} | awk -F. '{$NF+=1; OFS="."; print $0}')"
+  
+    - name: Update version file
+      run: echo "${{ steps.increment_version.outputs.version }}" > VERSION
+
     - name: docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}   
@@ -18,8 +30,11 @@ jobs:
 
     - name: docker build
       run: |
-        docker build . -t praveenkumar081097/simpleapp:v1.0.0
+        docker build -t praveenkumar081097/simpleapp:$GITHUB_SHA .
+        docker tag praveenkumar081097/simpleapp:$GITHUB_SHA praveenkumar081097/simpleapp:${{ steps.increment_version.outputs.version }}
+        docker tag praveenkumar081097/simpleapp:$GITHUB_SHA praveenkumar081097/simpleapp:latest
 
     - name: docker push
       run: |
-        docker push praveenkumar081097/simpleapp:v1.0.0
+        docker push praveenkumar081097/simpleapp:${{ steps.increment_version.outputs.version }}
+        docker push praveenkumar081097/simpleapp:latest
