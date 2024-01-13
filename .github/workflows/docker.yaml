@@ -18,8 +18,8 @@ jobs:
 
     - name: docker build
       run: |
-        docker build . -t praveenkumar081097/simpleapp:$(date +%s)
+        docker build . -t praveenkumar081097/simpleapp:v1.0.0
 
     - name: docker push
       run: |
-        docker push praveenkumar081097/simpleapp:$(date +%s)
+        docker push praveenkumar081097/simpleapp:v1.0.0
