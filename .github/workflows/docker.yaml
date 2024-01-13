@@ -12,7 +12,7 @@ jobs:
   
     - name: Read current version
       id: read_version
-      run: echo "VERSION=$(cat config/VERSION)" >> $GITHUB_ENV
+      run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
 
     - name: Increment version
       id: increment_version
