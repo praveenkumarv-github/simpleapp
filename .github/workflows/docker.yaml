@@ -9,17 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-  
-    - name: Read current version
-      id: read_version
-      run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-
-    - name: Increment version
-      id: increment_version
-      run: echo "${{ steps.increment_version.outputs.VERSION }}" > config/VERSION
-  
-    - name: Update version file
-      run: echo "${{ steps.increment_version.outputs.version }}" > VERSION
 
     - name: docker login
       env:
