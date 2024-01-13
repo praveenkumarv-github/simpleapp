@@ -12,11 +12,11 @@ jobs:
   
     - name: Read current version
       id: read_version
-      run: echo "::set-output name=version::$(cat VERSION)"
+      run: echo "VERSION=$(cat config/VERSION)" >> $GITHUB_ENV
 
     - name: Increment version
       id: increment_version
-      run: echo "::set-output name=version::$(echo ${{ steps.read_version.outputs.version }} | awk -F. '{$NF+=1; OFS="."; print $0}')"
+      run: echo "${{ steps.increment_version.outputs.VERSION }}" > config/VERSION
   
     - name: Update version file
       run: echo "${{ steps.increment_version.outputs.version }}" > VERSION
@@ -31,10 +31,7 @@ jobs:
     - name: docker build
       run: |
         docker build -t praveenkumar081097/simpleapp:$GITHUB_SHA .
-        docker tag praveenkumar081097/simpleapp:$GITHUB_SHA praveenkumar081097/simpleapp:${{ steps.increment_version.outputs.version }}
-        docker tag praveenkumar081097/simpleapp:$GITHUB_SHA praveenkumar081097/simpleapp:latest
 
     - name: docker push
       run: |
-        docker push praveenkumar081097/simpleapp:${{ steps.increment_version.outputs.version }}
-        docker push praveenkumar081097/simpleapp:latest
+        docker push praveenkumar081097/simpleapp:$GITHUB_SHA
