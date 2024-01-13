@@ -16,7 +16,7 @@ jobs:
 
     - name: Increment version
       id: increment_version
-      run: echo "VERSION=$(echo ${{ steps.read_version.outputs.VERSION }} | awk -F. '{$NF+=1; OFS="."; print $0}')" >> $GITHUB_ENV
+      run: echo "::set-output name=version::$(echo ${{ steps.read_version.outputs.version }} | awk -F. '{$NF+=1; OFS="."; print $0}')"
   
     - name: Update version file
       run: echo "${{ steps.increment_version.outputs.version }}" > VERSION
