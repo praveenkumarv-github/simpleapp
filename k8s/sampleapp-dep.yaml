@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpserver-deployment
+  labels:
+    app.kubernetes.io/name: proxy
+    app: httpserver
+spec:
+  selector:
+    matchLabels:
+      app: httpserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: httpserver
+    spec:
+      containers:
+      - name: simpleapp
+        image: praveenkumar081097/simpleapp:latest
+        ports:
+        - containerPort: 80
+          name: http-web-svc

@@ -25,8 +25,7 @@ pip install httpserver
 python /simpleapp/main.py
 ```
 
-
-## Testing - Locally Dcoker
+## Testing - Locally Docker
 
 ```shell
 docker pull praveenkumar081097/simpleapp:latest
@@ -35,4 +34,16 @@ docker run -it --rm -d -p 80:80 --name web praveenkumar081097/simpleapp:latest
 
 curl 192.168.29.173:80
 curl 192.168.29.173/hit-server-endpoint
+```
+
+## k3s - Setup
+```shell
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --docker --disable metrics-server" sh
+firewall-cmd --permanent --add-port=6443/tcp
+firewall-cmd --reload
+```
+## k8s - SimpleApp - Setup
+```shell
+kubectl apply -f k8s/sampleapp-dep.yaml
+kubectl apply -f k8s/sampleapp-svc.yaml
 ```

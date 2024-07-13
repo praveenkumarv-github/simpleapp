@@ -5,6 +5,7 @@ on:
     paths-ignore:
       - 'README.md'
       - 'VERSION'
+      - 'k8s/*'
     branches: [ "main" ]
 
 jobs:
