@@ -9,7 +9,7 @@ COPY main.py /app/main.py
 COPY index.html /app/index.html
 
 # Expose the port that the app will run on
-EXPOSE 8000
+EXPOSE 80
 
 # Install any dependencies (not required in this case as it's a simple example)
 # RUN pip install some-package
