@@ -1,19 +1,18 @@
 apiVersion: apps/v1
-kind: Deployment
+kind:
 metadata:
-  name: httpserver-deployment
+  name: simpleapp-deployment
   labels:
-    app.kubernetes.io/name: proxy
-    app: httpserver
+    app: simpleapp
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: httpserver
-  replicas: 1
+      app: simpleapp
   template:
     metadata:
       labels:
-        app: httpserver
+        app: simpleapp
     spec:
       containers:
       - name: simpleapp

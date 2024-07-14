@@ -1,13 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: httpserver-service
+  name: simpleapp-service
 spec:
   selector:
-    app.kubernetes.io/name: proxy
-    app: httpserver
+    app: simpleapp
   ports:
-  - name: httpserver-port
-    protocol: TCP
-    port: 80
-    targetPort: http-web-svc
+    - protocol: TCP
+      port: 80
+      targetPort: 80
