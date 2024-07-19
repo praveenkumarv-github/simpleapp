@@ -1,22 +1,22 @@
 apiVersion: apps/v1
-kind:
+kind: Deployment
 metadata:
-  name: simpleapp-deployment
+  name: simpleapp-frontend-deployment
   labels:
-    app: simpleapp
+    application: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: simpleapp
+      application: frontend
   template:
     metadata:
       labels:
-        app: simpleapp
+        application: frontend
     spec:
       containers:
-      - name: simpleapp
+      - name: simpleapp-frontend
         image: praveenkumar081097/simpleapp:latest
         ports:
         - containerPort: 80
-          name: http-web-svc
+          name: frontend-svc
