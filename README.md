@@ -14,6 +14,12 @@ ssh-keygen -t ed25519 -C "praveenkumar081097@gmail.com"
 git remote set-url --push origin 'git@github.com:praveenkumarv-github/simpleapp.git'
 ```
 
+# Docker hub link 
+
+```shell
+https://hub.docker.com/r/praveenkumar081097/simpleapp
+```
+
 ## Testing - Locally
 
 To run this app locally, you need to install the `httpserver` package using pip:
@@ -49,3 +55,14 @@ firewall-cmd --reload
 kubectl apply -f k8s/sampleapp-dep.yaml
 kubectl apply -f k8s/sampleapp-svc.yaml
 ```
+
+## Helm - Setup Ingress
+
+```shell
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+kubectl create namespace ingress-nginx
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
+```
+
