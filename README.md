@@ -48,7 +48,14 @@ curl 192.168.29.173/hit-server-endpoint
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --docker --disable metrics-server" sh
 firewall-cmd --permanent --add-port=6443/tcp
 firewall-cmd --reload
+cat /var/lib/rancher/k3s/server/node-token
 ```
+
+```shell
+curl https://releases.rancher.com/install-docker/20.10.sh | sh
+curl -sfL https://get.k3s.io | K3S_URL=https://IP:6443 K3S_TOKEN=XXXXXXX::server:YYYYY sh -
+```
+
 ## k8s - SimpleApp - Setup
 
 ```shell
