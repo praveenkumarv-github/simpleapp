@@ -54,6 +54,7 @@ cat /var/lib/rancher/k3s/server/node-token
 ```shell
 curl https://releases.rancher.com/install-docker/20.10.sh | sh
 curl -sfL https://get.k3s.io | K3S_URL=https://IP:6443 K3S_TOKEN=XXXXXXX::server:YYYYY sh -
+kubectl label node worker1.com node-role.kubernetes.io/worker=worker
 ```
 
 ## k8s - SimpleApp - Setup
