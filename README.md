@@ -57,6 +57,16 @@ curl -sfL https://get.k3s.io | K3S_URL=https://IP:6443 K3S_TOKEN=XXXXXXX::server
 kubectl label node worker1.com node-role.kubernetes.io/worker=worker
 ```
 
+## k3s - Ingress Setup
+
+Follow -> https://metallb.universe.tf/installation/
+
+```shell
+kubectl -f apply simpleapp/k8s/crd/kube-proxy-configmap.yaml
+kubectl -f apply simpleapp/k8s/crd/kube-proxy-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.8/config/manifests/metallb-native.yaml
+```
+
 ## k8s - SimpleApp - Setup
 
 ```shell
@@ -71,6 +81,6 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 kubectl create namespace ingress-nginx
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
-helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
+helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
 ```
 
