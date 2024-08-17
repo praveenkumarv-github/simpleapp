@@ -1,45 +1,32 @@
-kind: Pod
-apiVersion: v1
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: banana-app
-  labels:
-    app: banana
+  name: web-app
 spec:
-  containers:
-    - name: banana-app
-      image: hashicorp/http-echo
-      args:
-        - "-text=banana"
-
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
 ---
-
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: banana-service
+  name: web-app-service
 spec:
   selector:
-    app: banana
+    app: web-app
   ports:
-    - port: 5678 # Default port for image
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: banana-ingress
-  annotations:
-    ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: nginx
-  rules:
-    - http:
-        paths:
-          - path: /banana
-            pathType: Prefix
-            backend:
-              service:
-                name: banana-service
-                port:
-                  number: 5678
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

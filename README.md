@@ -62,9 +62,8 @@ kubectl label node worker1.com node-role.kubernetes.io/worker=worker
 Follow -> https://metallb.universe.tf/installation/
 
 ```shell
-kubectl -f apply simpleapp/k8s/crd/kube-proxy-configmap.yaml
-kubectl -f apply simpleapp/k8s/crd/kube-proxy-ds.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.8/config/manifests/metallb-native.yaml
+kubectl apply -f simpleapp/k8s/crd/kube-proxy.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml
 ```
 
 ## k8s - SimpleApp - Setup
@@ -84,19 +83,8 @@ helm repo update
 helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
 ```
 
+```shell
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml
 
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: nat
-  namespace: metallb-system
-spec:
-  addresses:
-    - 192.168.136.206-192.168.136.209
----
-apiVersion: metallb.io/v1beta1
-kind: L2Advertisement
-metadata:
-  name: empty
-  namespace: metallb-system
+```
+
