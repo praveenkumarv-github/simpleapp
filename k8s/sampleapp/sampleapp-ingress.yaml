@@ -2,12 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: simpleapp-frontend-ingress
-  # annotations:
-  #   nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-    - host: centosui.com
+    - host: app.server1.lab.net
       http:
         paths:
           - pathType: Prefix
