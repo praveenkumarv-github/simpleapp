@@ -48,7 +48,7 @@
     <div class="container">
         <h1>Hello, this is a simple web app!</h1>
         <p>Click the button below to refresh the page and hit the server.</p>
-        <button class="refresh-button" onclick="refreshPage()">Counter</button>
+        <button class="refresh-button" id="refreshButton" onclick="refreshPage()">Counter</button>
         <span class="counter" id="counter">0</span>
     </div>
 
@@ -58,6 +58,10 @@
         function refreshPage() {
             clickCount++;
             document.getElementById('counter').innerText = clickCount;
+
+            // Change button color
+            var button = document.getElementById('refreshButton');
+            button.style.backgroundColor = '#3498db'; // Change to desired color
 
             // Make a request to the server
             fetch('/hit-server-endpoint')  // Replace with your server endpoint
