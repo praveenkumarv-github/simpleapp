@@ -61,11 +61,10 @@ kubectl label node worker1.com node-role.kubernetes.io/worker=worker
 
 ### MetalLB
 
-Follow -> https://metallb.universe.tf/installation/
+Follow -> https://raw.githubusercontent.com/morrismusumi/kubernetes/refs/heads/main/k3s/metallb.yml
 
 ```shell
-kubectl apply -f simpleapp/k8s/crd/kube-proxy.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml
+cp -rvf simpleapp/k8s/ingress-controller/metallb/config.yaml /var/lib/rancher/k3s/server/manifests/
 ```
 
 ## k8s - SimpleApp - Setup
