@@ -1,79 +1,43 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Web App</title>
+    <title>Server & Request Info</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             text-align: center;
-            margin: 50px;
+            margin: 0;
+            padding: 20px;
         }
 
         .container {
-            background-color: #fff;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .refresh-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #2ecc71;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        h1 {
+            color: #333;
         }
 
-        .refresh-button:hover {
-            background-color: #27ae60;
-        }
-
-        .counter {
-            display: inline-block;
-            margin-left: 10px;
-            font-size: 16px;
+        p {
             color: #555;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hello, this is a simple web app!</h1>
-        <p>Click the button below to refresh the page and hit the server.</p>
-        <button class="refresh-button" id="refreshButton" onclick="refreshPage()">Counter</button>
-        <span class="counter" id="counter">0</span>
+        <h1>Host and Request Information</h1>
+        <p><strong>Server IP Address:</strong> {{SERVER_IP}}</p>
+        <p><strong>Client IP Address:</strong> {{CLIENT_IP}}</p>
+        <p><strong>Request Method:</strong> {{REQUEST_METHOD}}</p>
     </div>
-
-    <script>
-        var clickCount = 0;
-
-        function refreshPage() {
-            clickCount++;
-            document.getElementById('counter').innerText = clickCount;
-
-            // Change button color
-            var button = document.getElementById('refreshButton');
-            button.style.backgroundColor = '#3498db'; // Change to desired color
-
-            // Make a request to the server
-            fetch('/hit-server-endpoint')  // Replace with your server endpoint
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    // Uncomment the next line to refresh the page
-                    // location.reload();
-                })
-                .catch(error => console.error('Error hitting server endpoint:', error));
-        }
-    </script>
 </body>
 </html>
