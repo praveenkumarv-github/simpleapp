@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import os
 
 class SimpleWebAppHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -7,7 +8,8 @@ class SimpleWebAppHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
         # Read HTML content from file
-        with open('index.html', 'r') as file:
+        file_path = os.path.join(os.path.dirname(__file__), 'index.html')
+        with open(file_path, 'r') as file:
             html_content = file.read()
 
         self.wfile.write(html_content.encode('utf-8'))
@@ -20,4 +22,3 @@ def run_web_app(port=80):
 
 if __name__ == '__main__':
     run_web_app()
-#dummy commit
