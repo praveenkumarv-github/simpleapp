@@ -15,6 +15,7 @@ spec:
       containers:
       - name: simpleapp-frontend
         image: praveenkumar081097/simpleapp:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
           name: frontend-svc
