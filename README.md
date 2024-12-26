@@ -83,3 +83,22 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
 ```
+
+## Troubleshooting
+
+### Error
+
+```
+Fix: https://stackoverflow.com/questions/61365202/nginx-ingress-service-ingress-nginx-controller-admission-not-found
+
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+
+Internal error occurred:failed calling webhook "ipaddresspoolvalidationwebhook.metallb.io"
+Error from server (InternalError): error when creating "ingress-controller/metallb/helm-metallb-yaml": Internal error occurred: failed calling webhook "ipaddresspoolvalidationwebhook.metallb.io": failed to call webhook: Post "https://metallb-webhook-service.metallb-system.svc:443/validate-metallb-io-v1beta1-ipaddresspool?timeout=10s": context deadline exceeded
+
+Internal error occurred: failed calling webhook "l2advertisementvalidationwebhook.metallb.io"
+Error from server (InternalError): error when creating "ingress-controller/metallb/helm-metallb-yaml": Internal error occurred: failed calling webhook "l2advertisementvalidationwebhook.metallb.io": failed to call webhook: Post "https://metallb-webhook-service.metallb-system.svc:443/validate-metallb-io-v1beta1-l2advertisement?timeout=10s": context deadline exceeded
+
+Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io"
+Error from server (InternalError): error when creating "k8s/sampleapp/sampleapp-ingress.yaml": Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io": failed to call webhook: Post "https://ingress-nginx-controller-admission.ingress-nginx.svc:443/networking/v1/ingresses?timeout=10s": context deadline exceeded
+```

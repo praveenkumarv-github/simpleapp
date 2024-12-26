@@ -38,6 +38,7 @@ metadata:
   name: http-ingress
   annotations:
     nginx.ingress.kubernetes.io/service-upstream: "true"
+    validation.webhook.timeout: "30s"  # Increased timeout to 30 seconds
 spec:
   ingressClassName: nginx
   rules:

@@ -1,0 +1,233 @@
+Name:         cluster-dns
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+clusterDNS:
+----
+10.43.0.10
+
+clusterDomain:
+----
+cluster.local
+
+
+BinaryData
+====
+
+Events:  <none>
+
+
+Name:         coredns
+Namespace:    kube-system
+Labels:       objectset.rio.cattle.io/hash=bce283298811743a0386ab510f2f67ef74240c57
+Annotations:  objectset.rio.cattle.io/applied:
+                H4sIAAAAAAAA/4yQwWrzMBCEX0Xs2fEf20nsX9BDybH02lMva2kdq1Z2g6SkBJN3L8IUCiVtbyNGOzvfzoAn90IhOmHQcKmgAIsJQc+wl0CD8wQaSr1t1PzKSilFIUiIix4JfRoXHQ...
+              objectset.rio.cattle.io/id: 
+              objectset.rio.cattle.io/owner-gvk: k3s.cattle.io/v1, Kind=Addon
+              objectset.rio.cattle.io/owner-name: coredns
+              objectset.rio.cattle.io/owner-namespace: kube-system
+
+Data
+====
+Corefile:
+----
+.:53 {
+    errors
+    health
+    ready
+    kubernetes cluster.local in-addr.arpa ip6.arpa {
+      pods insecure
+      fallthrough in-addr.arpa ip6.arpa
+    }
+    hosts /etc/coredns/NodeHosts {
+      ttl 60
+      reload 15s
+      fallthrough
+    }
+    prometheus :9153
+    forward . /etc/resolv.conf
+    cache 30
+    loop
+    reload
+    loadbalance
+    import /etc/coredns/custom/*.override
+}
+import /etc/coredns/custom/*.server
+
+
+NodeHosts:
+----
+192.168.29.86 worker1.lab.net
+192.168.29.91 server1.lab.net
+2405:201:e053:a8ab:3681:2ac:99c8:867c worker1.lab.net
+
+
+
+BinaryData
+====
+
+Events:  <none>
+
+
+Name:         extension-apiserver-authentication
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+client-ca-file:
+----
+-----BEGIN CERTIFICATE-----
+MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3MtY2xp
+ZW50LWNhQDE3MzUxNDU3MjEwHhcNMjQxMjI1MTY1NTIxWhcNMzQxMjIzMTY1NTIx
+WjAjMSEwHwYDVQQDDBhrM3MtY2xpZW50LWNhQDE3MzUxNDU3MjEwWTATBgcqhkjO
+PQIBBggqhkjOPQMBBwNCAAQR+IF1u2fp5uTK1Ii5ZucEBEHml/HkZVHoFRG615F2
+jJPPCdo8XItMYs0jVhE7oODgXKfoX+viX3I2ydHHNx2To0IwQDAOBgNVHQ8BAf8E
+BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQU1S9Fil5C5V4iTrVtFV3X
+YQMkXdEwCgYIKoZIzj0EAwIDSAAwRQIgbj3nVDcKQQ49iRb7gZ3jwarZIAy2kyPk
+oe0CJeGVNq0CIQCTt8yD8FW9Ia3DGJhzbfD3YGC2QCJaMmmvF7dnf7AIjw==
+-----END CERTIFICATE-----
+
+
+requestheader-allowed-names:
+----
+["system:auth-proxy"]
+
+requestheader-client-ca-file:
+----
+-----BEGIN CERTIFICATE-----
+MIIBiDCCAS2gAwIBAgIBADAKBggqhkjOPQQDAjArMSkwJwYDVQQDDCBrM3MtcmVx
+dWVzdC1oZWFkZXItY2FAMTczNTE0NTcyMTAeFw0yNDEyMjUxNjU1MjFaFw0zNDEy
+MjMxNjU1MjFaMCsxKTAnBgNVBAMMIGszcy1yZXF1ZXN0LWhlYWRlci1jYUAxNzM1
+MTQ1NzIxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIq0D5MKmTfaWX8cg1m9p
+o8HxgL0l6LhYctUClP//5YyrHjdZJmLpv6k4dv6nuHQ7l6UPfCK/rQJhvZwduHwZ
+D6NCMEAwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYE
+FNqZDERhLnQHGJyHUAk0yQ/lqm2CMAoGCCqGSM49BAMCA0kAMEYCIQCLDCpaUWrx
+TN6ExGS4NB3v0sm+q6A9E4/svO7mnUio8AIhAKrJVNpZFlQC57QtKH+i4EFOYrMp
+qVQhweod5aRKVTz4
+-----END CERTIFICATE-----
+
+
+requestheader-extra-headers-prefix:
+----
+["X-Remote-Extra-"]
+
+requestheader-group-headers:
+----
+["X-Remote-Group"]
+
+requestheader-username-headers:
+----
+["X-Remote-User"]
+
+
+BinaryData
+====
+
+Events:  <none>
+
+
+Name:         kube-apiserver-legacy-service-account-token-tracking
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+since:
+----
+2024-12-25
+
+
+BinaryData
+====
+
+Events:  <none>
+
+
+Name:         kube-root-ca.crt
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/description:
+                Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubern...
+
+Data
+====
+ca.crt:
+----
+-----BEGIN CERTIFICATE-----
+MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+dmVyLWNhQDE3MzUxNDU3MjEwHhcNMjQxMjI1MTY1NTIxWhcNMzQxMjIzMTY1NTIx
+WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3MzUxNDU3MjEwWTATBgcqhkjO
+PQIBBggqhkjOPQMBBwNCAATsxprLdXkuddwnP2ZjiNBpYi2zzrg8UmMGhyXQmLuS
+Yd+lVdrY/AiOhCjrNx/NIsTvdp9U0L8NBaHaUO/iQu8Vo0IwQDAOBgNVHQ8BAf8E
+BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUFM8MtboMNMynKS5SfLj9
+ejnSdHEwCgYIKoZIzj0EAwIDSAAwRQIhAPPF28qMuuMrHwQwgTLdpxKLndg6lssK
+p6jYBVqjMd/hAiBXkfXKXdlVbQxZTCWR05oLwKKLmzLDHKWozXb1pTKrIw==
+-----END CERTIFICATE-----
+
+
+
+BinaryData
+====
+
+Events:  <none>
+
+
+Name:         local-path-config
+Namespace:    kube-system
+Labels:       objectset.rio.cattle.io/hash=183f35c65ffbc3064603f43f1580d8c68a2dabd4
+Annotations:  objectset.rio.cattle.io/applied:
+                H4sIAAAAAAAA/4ySX2vbMBTFv4p2t0c7deb8Q7CHsLSsLG1Cl/VlAnMtybFq+0pYSkoJ+e5DCYFurNsepR/n6JyDDoDOPOreG0vAYT+EBBQGBH4Aaaky28GTP6GDIMYEkFV6jaG+Qy...
+              objectset.rio.cattle.io/id: 
+              objectset.rio.cattle.io/owner-gvk: k3s.cattle.io/v1, Kind=Addon
+              objectset.rio.cattle.io/owner-name: local-storage
+              objectset.rio.cattle.io/owner-namespace: kube-system
+
+Data
+====
+config.json:
+----
+{
+  "nodePathMap":[
+  {
+    "node":"DEFAULT_PATH_FOR_NON_LISTED_NODES",
+    "paths":["/var/lib/rancher/k3s/storage"]
+  }
+  ]
+}
+
+helperPod.yaml:
+----
+apiVersion: v1
+kind: Pod
+metadata:
+  name: helper-pod
+spec:
+  containers:
+  - name: helper-pod
+    image: "rancher/mirrored-library-busybox:1.36.1"
+    imagePullPolicy: IfNotPresent
+
+setup:
+----
+#!/bin/sh
+set -eu
+mkdir -m 0777 -p "${VOL_DIR}"
+chmod 700 "${VOL_DIR}/.."
+
+teardown:
+----
+#!/bin/sh
+set -eu
+rm -rf "${VOL_DIR}"
+
+
+BinaryData
+====
+
+Events:  <none>

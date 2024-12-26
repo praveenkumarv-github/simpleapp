@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     application: frontend
+  # internalTrafficPolicy: Cluster
   ports:
     - protocol: TCP
       port: 80
