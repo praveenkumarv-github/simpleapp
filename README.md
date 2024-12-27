@@ -70,39 +70,17 @@ kubectl apply -f simpleapp/k8s/sampleapp/.
 
 ### Common Errors and Fixes
 
-#### Error:
-```bash
-Error from server (InternalError): failed calling webhook "validate.nginx.ingress.kubernetes.io"
-```
-**Fix:**
-```bash
-kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-```
+1. **Ingress-Nginx Admission Issue**  
+   - Error: Webhook "validate.nginx.ingress.kubernetes.io" times out.  
+   - **Solution**: Delete the ingress-nginx webhook configuration:  
+     ```shell
+     kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+     ```
 
-#### Error:
-```bash
-Internal error occurred: failed calling webhook "ipaddresspoolvalidationwebhook.metallb.io"
-```
-**Fix:**
-```bash
-kubectl delete -A ValidatingWebhookConfiguration metallb-webhook
-```
+2. **MetalLB Webhook Timeout**  
+   - Error: Timeout while calling MetalLB webhooks for IPAddressPool or L2Advertisement validation.  
+   - **Solution**: Check if the MetalLB webhook service is running and reachable.
 
-#### Error:
-```bash
-Internal error occurred: failed calling webhook "l2advertisementvalidationwebhook.metallb.io"
-```
-**Fix:**
-```bash
-kubectl delete -A ValidatingWebhookConfiguration metallb-webhook
-```
-
-#### Error:
-```bash
-Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io"
-```
-**Fix:**
-```bash
-kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-```
-
+3. **Ingress Validation Timeout**  
+   - Error: Ingress creation fails due to validation webhook timeout.  
+   - **Solution**: Ensure the ingress-nginx controller is deployed correctly and verify network connectivity.
