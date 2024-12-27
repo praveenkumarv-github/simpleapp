@@ -1,104 +1,108 @@
-# Simple App
+# K3S Cluster Setup with App
 
+## Cluster Setup
+
+### K3S - Kubernetes Cluster
+#### Server:
+```bash
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --docker --disable=servicelb" sh
+token:  /var/lib/rancher/k3s/server/node-token
+```
+
+#### Worker:
+```bash
+curl -sfL https://get.k3s.io | K3S_URL=https://SERVERIP:6443 K3S_TOKEN=XXYXX INSTALL_K3S_EXEC="--docker" sh -
+```
+
+#### Common for Server & Worker
+```bash
+systemctl disable firewalld --now
+firewall-cmd --reload
+```
+
+#### Post K3s Setup
+```bash
+kubectl label node workerX.com node-role.kubernetes.io/worker=worker
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+```
+
+### MetalLB - Classic/On-prem Load Balancer
+```bash
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
+kubectl apply -f simpleapp/k8s/ingress-controller/metallb/helm-metallb.yaml
+```
+
+### NGINX - Ingress Controller
+```bash
+kubectl create namespace ingress-nginx
+helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx
+helm uninstall -n ingress-nginx ingress-nginx
+```
+
+### Prometheus-Stack - Cluster Monitoring
+```bash
+helm install monitoring prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
+```
+
+## SimpleApp Setup
 This is a simple app that can be run locally.
 
-## Setup - Locally
-
-```shell
+### Setup - Locally
+```bash
 git config --global user.name praveenkumarv-github
 git config --global user.email praveenkumar081097@gmail.com
-
 ssh-keygen -t ed25519 -C "praveenkumar081097@gmail.com"
 # For more: Added a new SSH key to your GitHub account - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection
-
 git remote set-url --push origin 'git@github.com:praveenkumarv-github/simpleapp.git'
 ```
 
-# Docker hub link 
-
-```shell
+### Docker Hub Link
+```bash
 https://hub.docker.com/r/praveenkumar081097/simpleapp
 ```
 
-## Testing - Locally
-
-To run this app locally, you need to install the `httpserver` package using pip:
-For running it locally
-
-```shell
-pip install httpserver
-
-python /simpleapp/main.py
-```
-
-## Testing - Locally Docker
-
-```shell
-docker pull praveenkumar081097/simpleapp:latest
-
-docker run -it --rm -d -p 80:80 --name web praveenkumar081097/simpleapp:latest
-
-curl 192.168.29.173:80
-curl 192.168.29.173/hit-server-endpoint
-```
-
-## k3s - Setup
-
-```shell
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --docker --disable metrics-server" sh
-firewall-cmd --permanent --add-port=6443/tcp
-firewall-cmd --reload
-cat /var/lib/rancher/k3s/server/node-token
-```
-
-```shell
-curl https://releases.rancher.com/install-docker/20.10.sh | sh
-curl -sfL https://get.k3s.io | K3S_URL=https://IP:6443 K3S_TOKEN=XXXXXXX::server:YYYYY sh -
-kubectl label node worker1.com node-role.kubernetes.io/worker=worker
-```
-
-## k3s - Ingress Setup
-
-### MetalLB
-
-Follow -> https://raw.githubusercontent.com/morrismusumi/kubernetes/refs/heads/main/k3s/metallb.yml
-
-```shell
-cp -rvf simpleapp/k8s/ingress-controller/metallb/config.yaml /var/lib/rancher/k3s/server/manifests/
-```
-
-## k8s - SimpleApp - Setup
-
-```shell
-kubectl apply -f k8s/sampleapp-dep.yaml
-kubectl apply -f k8s/sampleapp-svc.yaml
-```
-
-## Helm - Setup Ingress
-
-```shell
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-kubectl create namespace ingress-nginx
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
+### Deploying the App
+```bash
+kubectl apply -f simpleapp/k8s/sampleapp/.
 ```
 
 ## Troubleshooting
 
-### Error
+### Common Errors and Fixes
 
+#### Error:
+```bash
+Error from server (InternalError): failed calling webhook "validate.nginx.ingress.kubernetes.io"
 ```
-Fix: https://stackoverflow.com/questions/61365202/nginx-ingress-service-ingress-nginx-controller-admission-not-found
-
+**Fix:**
+```bash
 kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-
-Internal error occurred:failed calling webhook "ipaddresspoolvalidationwebhook.metallb.io"
-Error from server (InternalError): error when creating "ingress-controller/metallb/helm-metallb-yaml": Internal error occurred: failed calling webhook "ipaddresspoolvalidationwebhook.metallb.io": failed to call webhook: Post "https://metallb-webhook-service.metallb-system.svc:443/validate-metallb-io-v1beta1-ipaddresspool?timeout=10s": context deadline exceeded
-
-Internal error occurred: failed calling webhook "l2advertisementvalidationwebhook.metallb.io"
-Error from server (InternalError): error when creating "ingress-controller/metallb/helm-metallb-yaml": Internal error occurred: failed calling webhook "l2advertisementvalidationwebhook.metallb.io": failed to call webhook: Post "https://metallb-webhook-service.metallb-system.svc:443/validate-metallb-io-v1beta1-l2advertisement?timeout=10s": context deadline exceeded
-
-Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io"
-Error from server (InternalError): error when creating "k8s/sampleapp/sampleapp-ingress.yaml": Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io": failed to call webhook: Post "https://ingress-nginx-controller-admission.ingress-nginx.svc:443/networking/v1/ingresses?timeout=10s": context deadline exceeded
 ```
+
+#### Error:
+```bash
+Internal error occurred: failed calling webhook "ipaddresspoolvalidationwebhook.metallb.io"
+```
+**Fix:**
+```bash
+kubectl delete -A ValidatingWebhookConfiguration metallb-webhook
+```
+
+#### Error:
+```bash
+Internal error occurred: failed calling webhook "l2advertisementvalidationwebhook.metallb.io"
+```
+**Fix:**
+```bash
+kubectl delete -A ValidatingWebhookConfiguration metallb-webhook
+```
+
+#### Error:
+```bash
+Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io"
+```
+**Fix:**
+```bash
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+```
+
