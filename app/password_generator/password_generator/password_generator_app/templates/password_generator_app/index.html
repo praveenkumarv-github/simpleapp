@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+</head>
+<body>
+    <h1>Password Generator</h1>
+    <form id="passwordForm">
+        <label for="length">Enter the length of the password:</label>
+        <input type="number" id="length" name="length" min="1" required>
+        <button type="submit">Generate Password</button>
+    </form>
+    <h2>Generated Password:</h2>
+    <p id="password"></p>
+
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const length = document.getElementById('length').value;
+            fetch(`/api/generate-password/?length=${length}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('password').textContent = data.password;
+                });
+        });
+    </script>
+</body>
+</html>
