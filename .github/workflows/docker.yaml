@@ -6,6 +6,7 @@ on:
       - 'README.md'
       - 'VERSION'
       - 'k8s/**'
+      - 'app/**'
     branches: [ "main" ]
 
 jobs:
