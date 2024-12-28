@@ -5,5 +5,4 @@ urlpatterns = [
     path('', index, name='index'),
     path('generate-password/', generate_password, name='generate_password'),
     path('healthz/', health_check, name='health_check'),
-
 ]
