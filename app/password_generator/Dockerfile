@@ -9,14 +9,14 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /code
 
 # Install dependencies
-COPY requirements.txt /code/
+COPY app/password_generator/requirements.txt /code/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project files
-COPY . /code/
+COPY app/password_generator /code/app/password_generator
 
 # Expose the port the app runs on
 EXPOSE 80
 
 # Run the Django development server
-CMD ["python", "password_generator/manage.py", "runserver", "0.0.0.0:80"]
+CMD ["python", "/code/app/password_generator/password_generator/manage.py", "runserver", "0.0.0.0:80"]
