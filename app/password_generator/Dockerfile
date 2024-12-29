@@ -13,7 +13,7 @@ COPY requirements.txt /code/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project files
-COPY password_generator /code/password_generator
+COPY . /code/
 
 # Expose the port the app runs on
 EXPOSE 80
