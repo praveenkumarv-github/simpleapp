@@ -2,8 +2,7 @@ name: Docker Build and Push - App
 
 on:
   push:
-    paths:
-      - 'app/password_generator/**'
+    paths: 'app/**'
     branches: [ "main" ]
 
 jobs:
