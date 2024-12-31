@@ -2,6 +2,11 @@
 
 ## Cluster Setup
 
+### Install - Docker
+```bash
+curl https://releases.rancher.com/install-docker/20.10.sh | sh
+```
+
 ### K3S - Kubernetes Cluster
 #### Server:
 ```bash
@@ -59,6 +64,23 @@ git remote set-url --push origin 'git@github.com:praveenkumarv-github/simpleapp.
 ### Docker Hub Link
 ```bash
 https://hub.docker.com/r/praveenkumar081097/simpleapp
+```
+
+### Testing - Locally
+To run this app locally, you need to install the httpserver package using pip: For running it locally
+
+```bash
+pip install httpserver
+python /simpleapp/main.py
+```
+
+### Setting Up - Locally Docker
+
+```bash
+docker pull praveenkumar081097/simpleapp:latest
+docker run -it --rm -d -p 80:80 --name web praveenkumar081097/simpleapp:latest
+curl 192.168.29.173:80
+curl 192.168.29.173/hit-server-endpoint
 ```
 
 ### Deploying the App
