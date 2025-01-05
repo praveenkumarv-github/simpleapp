@@ -1,5 +1,35 @@
 # K3S Cluster Setup with App
 
+## Cluster architecture
+
+![image](https://github.com/user-attachments/assets/7197c530-7226-4647-9927-eb790f39b9aa)
+
+### Setting Up a Local K3s Cluster: Learn Kubernetes the Hands-On Way
+
+This guide walks you through creating a lightweight Kubernetes (K8s) cluster using **K3s** on your local laptop or workstation. Perfect for development, testing, or learning, this setup allows you to host applications within your internal network without relying on cloud-managed services like EKS, AKS, or GKE.
+
+Building a local cluster from scratch is a cost-effective and insightful way to understand Kubernetes fundamentals while efficiently managing limited resources. By setting up a minimal yet functional cluster, you'll gain valuable experience in managing K8s in a resource-constrained environment.
+
+Whether you’re a beginner or looking to sharpen your skills, this guide is the perfect starting point. Let’s dive in!
+
+### Understanding the Initial Setup for Hosting a Cloud-Managed Style Kubernetes Cluster
+
+To set up a Kubernetes cluster locally for learning or testing, you will need the following:
+#### **Host System Requirements**
+
+- **Operating System**: Windows, Linux, or Mac (laptop/workstation)
+- **Internet Connection**: Required for downloading dependencies and cluster setup
+- **Virtualization Software**: Oracle VirtualBox installed
+
+| **VM Name** | **Role**    | **Description**                           | **Preferred Operating System** | **Networking**  | Private IP Address |
+| ----------- | ----------- | ----------------------------------------- | ------------------------------ | --------------- | ------------------ |
+| VM1         | Master Node | Acts as the control plane for the cluster | Linux (Centos9)                | Bridged Network | 192.168.29.91      |
+| VM2         | Worker Node | Runs application workloads                | Linux (Centos9)                | Bridged Network | 192.168.29.92      |
+| VM3         | Worker Node | Runs application workloads                | Linux (Centos9)                | Bridged Network | 192.168.29.93      |
+| VM4         | Client      | Internal client for accessing and testing | Linux (Centos9)                | Bridged Network | 192.168.29.94      |
+
+Set all VMs to Bridged Network mode. This ensures that all VMs can communicate within the same local network.
+
 ## Cluster Setup
 
 ### Install - Docker
