@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'app/password_generator/**'
+      - '.github/workflows/docker_pg_app_build-push.yaml'
     branches: [ "main" ]
 
 jobs:

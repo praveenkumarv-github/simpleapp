@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'app/sampleapp/**'
+      - '.github/workflows/docker_simple_app_build-push.yaml.yaml'
     branches: [ "main" ]
 
 jobs:
