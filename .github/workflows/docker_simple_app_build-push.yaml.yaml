@@ -1,9 +1,9 @@
-name: Docker Build and Push - Application
+name: Docker Build and Push
 
 on:
   push:
     paths:
-      - 'app/password_generator/**'
+      - 'app/sampleapp/**'
     branches: [ "main" ]
 
 jobs:
@@ -21,10 +21,10 @@ jobs:
 
     - name: docker build
       run: |
-        docker build -t praveenkumar081097/password-generator:$GITHUB_SHA app/password_generator/.
-        docker tag praveenkumar081097/password-generator:$GITHUB_SHA praveenkumar081097/password-generator:latest
+        docker build -t praveenkumar081097/simpleapp:$GITHUB_SHA app/sampleapp/.
+        docker tag praveenkumar081097/simpleapp:$GITHUB_SHA praveenkumar081097/simpleapp:latest
 
     - name: docker push
       run: |
-        docker push praveenkumar081097/password-generator:$GITHUB_SHA
-        docker push praveenkumar081097/password-generator:latest
+        docker push praveenkumar081097/simpleapp:$GITHUB_SHA
+        docker push praveenkumar081097/simpleapp:latest
