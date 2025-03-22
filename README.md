@@ -64,7 +64,7 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ### MetalLB - Classic/On-prem Load Balancer
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
-kubectl apply -f simpleapp/k8s/ingress-controller/metallb/helm-metallb.yaml
+kubectl apply -f simpleapp/k8s/k8/metallb/helm-metallb.yaml
 ```
 
 ### NGINX - Ingress Controller
@@ -72,11 +72,6 @@ kubectl apply -f simpleapp/k8s/ingress-controller/metallb/helm-metallb.yaml
 kubectl create namespace ingress-nginx
 helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx
 helm uninstall -n ingress-nginx ingress-nginx
-```
-
-### Prometheus-Stack - Cluster Monitoring
-```bash
-helm install monitoring prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
 ```
 
 ## SimpleApp Setup
