@@ -1,4 +1,4 @@
-name: Docker Build and Push - password_generator Application
+name: Docker Build and Push - Password_Generator Application
 
 on:
   push:
