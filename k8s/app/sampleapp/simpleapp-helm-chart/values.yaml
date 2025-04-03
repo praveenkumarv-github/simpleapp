@@ -1,0 +1,23 @@
+replicaCount: 2
+namespace: simpleapp
+image:
+  repository: praveenkumar081097/simpleapp
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  host: app.cluster.lab.net
+  path: /
+  pathType: Prefix
+  annotations:
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+
+labels:
+  application: frontend

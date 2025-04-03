@@ -1,19 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: simpleapp-frontend-ingress
+  name: {{ .Release.Name }}-frontend-ingress
   annotations:
-    nginx.ingress.kubernetes.io/service-upstream: "true"
+    {{ toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - host: app.cluster.lab.net
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - pathType: Prefix
+          - pathType: {{ .Values.ingress.pathType }}
             backend:
               service:
-                name: frontend-service
+                name: {{ .Release.Name }}-frontend-service
                 port:
-                  number: 80
-            path: /
+                  number: {{ .Values.service.port }}
+            path: {{ .Values.ingress.path }}
